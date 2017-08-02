@@ -5,6 +5,7 @@ m = 371650273390117;
 M = 5; N = 5; k = 5; Z = 5;
 length = M*N
 
+# Cost function operating over array of locations
 def cost(LEDconfiguration):
 	netirradiance = 0.0
 	avgirradiance = 0.0
@@ -27,4 +28,14 @@ def cost(LEDconfiguration):
 	CVRMSE = sigma/avgirradiance
 	return CVRMSE
 
+# testing cost function
 print(cost([2, 5, 9, 16, 18]))
+
+constraints = [(0, length)]*k
+
+guess = [0]*k
+
+# uses Scipy's optimize heuristic via SLSQP
+min = sp.optimize.minimize(cost, guess, method='SLSQP', bounds=constraints);
+
+print(min)
